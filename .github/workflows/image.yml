@@ -1,9 +1,10 @@
 name: Image
 
-# A version tag publishes the Docker image to the GitHub Container Registry,
-# then the release page, which running instances read to tell administrators
-# about it. Each platform is built on a runner of its own kind, much faster
-# than emulating one, then the builds are joined under one name per tag.
+# A version tag publishes the Docker image to the GitHub Container Registry.
+# The release page, which running instances read to tell administrators
+# about the version, is published by the maintainer once the image is out.
+# Each platform is built on a runner of its own kind, much faster than
+# emulating one, then the builds are joined under one name per tag.
 on:
   push:
     tags: ["v*"]
@@ -65,21 +66,16 @@ jobs:
     needs: build
     runs-on: ubuntu-24.04
     permissions:
-      contents: write
+      contents: read
       packages: write
     steps:
       - uses: actions/checkout@v4
-      # Before anything is tagged: a version without its changelog section
+      # Before anything is tagged: a version the changelog does not name
       # stops here.
-      - name: Take the release notes from the changelog
+      - name: Check the changelog names this version
         env:
           TAG: ${{ github.ref_name }}
-        run: |
-          version="${TAG#v}"
-          awk -v heading="## ${version}," \
-            'index($0, heading) == 1 { on = 1; next } on && /^## / { exit } on { print }' \
-            .github/CHANGELOG.md > "$RUNNER_TEMP/notes.md"
-          test -s "$RUNNER_TEMP/notes.md" || { echo "No changelog section for $version"; exit 1; }
+        run: grep -q "^## ${TAG#v}," .github/CHANGELOG.md || { echo "No changelog section for ${TAG#v}"; exit 1; }
       - uses: actions/download-artifact@v4
         with:
           path: ${{ runner.temp }}/digests
@@ -110,12 +106,3 @@ jobs:
         env:
           VERSION: ${{ steps.meta.outputs.version }}
         run: docker buildx imagetools inspect "$IMAGE:$VERSION"
-      - name: Publish the release page
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.ref_name }}
-        run: |
-          prerelease=""
-          case "$TAG" in *-*) prerelease="--prerelease" ;; esac
-          gh release create "$TAG" --title "${TAG#v}" --notes-file "$RUNNER_TEMP/notes.md" \
-            --verify-tag $prerelease

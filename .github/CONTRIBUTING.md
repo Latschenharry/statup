@@ -38,12 +38,12 @@ docker compose up -d
 
 ## Releasing
 
-A version tag publishes the image and the release page: once the changelog
-has a `## 0.2.0, <date>` section and `Cargo.toml` says `0.2.0`,
+A version tag publishes the image: once the changelog has a
+`## 0.2.0, <date>` section and `Cargo.toml` says `0.2.0`,
 `git tag -a v0.2.0 -m 0.2.0 && git push origin v0.2.0` builds the image for
-x86-64 and ARM, tags it `0.2.0`, `0.2` and `latest`, and publishes the
-release page with that changelog section, which running instances read to
-tell their administrators.
+x86-64 and ARM and tags it `0.2.0`, `0.2` and `latest`. The maintainer then
+publishes the release page (`gh release create v0.2.0 --verify-tag`), which
+running instances read to tell their administrators.
 
 ## Where things are
 
