@@ -28,6 +28,15 @@ or the given Rust targets, `scripts/coverage.sh` runs the tests under
 `cargo-llvm-cov`, `scripts/build-icons.py` regenerates the favicons from the
 logo.
 
+## Releasing
+
+A version tag publishes the image and the release page: once the changelog
+has a `## 0.2.0, <date>` section and `Cargo.toml` says `0.2.0`,
+`git tag -a v0.2.0 -m 0.2.0 && git push origin v0.2.0` builds the image for
+x86-64 and ARM, tags it `0.2.0`, `0.2` and `latest`, and publishes the
+release page with that changelog section, which running instances read to
+tell their administrators.
+
 ## Where things are
 
 A request goes down one layer at a time:

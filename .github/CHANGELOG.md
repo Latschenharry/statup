@@ -44,6 +44,8 @@ Since the first public commit:
   on the profile page; a temporary password is kept nowhere in clear and
   expires after seven days; past 64 password checks waiting, a sign-in is
   turned away instead of queued.
+- A Docker image for x86-64 and ARM servers, published with each version to
+  the GitHub Container Registry.
 
 Database: four migrations, applied on start (a maintenance without downtime
 flag, a single dashboard layout that keeps the members' arrangement, the
