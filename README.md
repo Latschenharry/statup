@@ -87,13 +87,13 @@ docker compose up -d
 
 Docker downloads the ready image, for x86-64 and ARM servers alike, and starts it in seconds.
 
-**2. Open http://localhost:3000**
+**2. Open it in your browser**
 
-An empty instance walks you through four steps: your administrator account, the page's name, logo and audience, the services to follow, then the address to share.
+At http://localhost:3000, or your server's address on port 3000, an empty instance walks you through four steps: your administrator account, the page's name, logo and audience, the services to follow, then the address to share.
 
-**3. Open it to your colleagues**
+**3. Invite your colleagues**
 
-At first Statup answers this machine only, so nobody else can claim the administrator account. When yours exists, change `"127.0.0.1:3000:3000"` to `"3000:3000"` under `ports:` in `docker-compose.yml` and run `docker compose up -d` again, or put Statup behind a reverse proxy with HTTPS. Then add your colleagues from the **Team** page.
+Add them from the **Team** page: they open the same address. For HTTPS and a name of your own, such as `status.example.com`, put Statup behind a reverse proxy.
 
 > [!TIP]
 > The [self-hosting guide](.github/SELF-HOSTING.md) has the rest: every setting, a reverse proxy with nginx or Caddy, backups, upgrades and a forgotten password.

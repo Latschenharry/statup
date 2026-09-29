@@ -5,6 +5,7 @@ All notable changes to Statup are listed here. The project is pre-v1: until 1.0,
 ## Unreleased
 
 - The Compose file runs the published image instead of building Statup: installing takes seconds, and upgrading is `docker compose pull`.
+- The Compose file opens Statup to the network again, so an install on a server is reached from every workstation right away.
 
 ## 0.1.0, 2026-09-29
 

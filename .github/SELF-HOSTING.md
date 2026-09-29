@@ -4,9 +4,9 @@ Everything past the [quick start](../README.md#quick-start): who can do what, th
 
 ## Reaching Statup from your network
 
-`docker-compose.yml` publishes Statup on this machine only, because the first account created becomes the administrator. Once it exists, either put Statup behind a reverse proxy (see below), or open it to your network by changing `"127.0.0.1:3000:3000"` to `"3000:3000"` under `ports:` and running `docker compose up -d` again. The host port is the part before `:3000`.
+`docker-compose.yml` publishes Statup on port 3000 of the host, so your colleagues reach it at the server's address. To use another port, change the part before `:3000` under `ports:` and run `docker compose up -d` again.
 
-On a server without a browser, preset the administrator with `ADMIN_EMAIL` and `ADMIN_PASSWORD` before the first start.
+The first account created becomes the administrator: create yours right after the first start, or preset it with `ADMIN_EMAIL` and `ADMIN_PASSWORD`.
 
 The time zone of the instance is taken from the browser that creates the first account, and can be changed later in Settings.
 
@@ -52,7 +52,7 @@ Every setting is optional. Write the ones you change in a `.env` file next to `d
 
 ## Running behind a reverse proxy
 
-Terminate TLS at the proxy, keep Statup on loopback as `docker-compose.yml` publishes it, then set:
+Terminate TLS at the proxy, publish Statup on loopback only (`"127.0.0.1:3000:3000"` under `ports:`), so nobody reaches it around the proxy, then set:
 
 ```bash
 PUBLIC_URL=https://status.example.com
