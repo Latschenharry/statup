@@ -45,6 +45,28 @@
         color: var(--ink-soft);
     }
 
+    /* A newer version to install: the dot of scheduled work beside an ink
+       sentence, as every state is said. */
+    .set-update {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 6px;
+        font-size: var(--text-sm);
+        font-weight: 600;
+        line-height: 1.5;
+        color: var(--ink);
+    }
+
+    .set-update::before {
+        content: "";
+        flex: none;
+        width: 7px;
+        height: 7px;
+        border-radius: var(--mark-radius);
+        background: var(--tone);
+    }
+
     .set-inline-form {
         display: flex;
         align-items: flex-start;

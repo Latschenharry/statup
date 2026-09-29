@@ -19,7 +19,9 @@ use statup::middleware::client_ip::{ClientIpSource, X_FORWARDED_FOR};
 use statup::middleware::rate_limit::RateLimit;
 use statup::models::Role;
 use statup::routes::create_router;
-use statup::services::{AuthService, DashboardLayoutService, LoginRateLimiter, NewAccount};
+use statup::services::{
+    AuthService, DashboardLayoutService, LoginRateLimiter, NewAccount, UpdateStatus,
+};
 use statup::session;
 use statup::state::AppState;
 
@@ -29,6 +31,9 @@ pub struct Options {
     pub public_mode: bool,
     pub trust_proxy_headers: bool,
     pub public_url: Option<&'static str>,
+    /// The tag the daily update check found, as if it had run. The check
+    /// itself never runs in tests.
+    pub latest_release: Option<&'static str>,
 }
 
 pub struct TestApp {
@@ -80,6 +85,7 @@ impl TestApp {
             trust_proxy_headers: options.trust_proxy_headers,
             client_ip_source: client_ip_source(options.trust_proxy_headers),
             public_url: options.public_url.map(ToOwned::to_owned),
+            update: update_status(options.latest_release),
         };
         // A small budget, so a test can exhaust it with a short burst.
         let rate_limit = RateLimit::with_quota(100, client_ip_source(options.trust_proxy_headers))
@@ -212,6 +218,14 @@ impl Drop for TestApp {
     fn drop(&mut self) {
         let _ = std::fs::remove_dir_all(&self.upload_dir);
     }
+}
+
+fn update_status(latest_release: Option<&str>) -> Arc<UpdateStatus> {
+    let status = UpdateStatus::default();
+    if let Some(tag) = latest_release {
+        status.record_latest(tag);
+    }
+    Arc::new(status)
 }
 
 /// Behind the test's pretend proxy, the one that appends `X-Forwarded-For`.

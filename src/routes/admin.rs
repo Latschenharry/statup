@@ -13,7 +13,7 @@ use crate::middleware::headers::no_store;
 use crate::middleware::{CsrfToken, HtmlForm, RequireAdmin};
 use crate::models::{Role, User, check_display_name};
 use crate::repositories::{IconRepository, UserRepository};
-use crate::services::{AuthService, LogoService, SettingsService};
+use crate::services::{AuthService, CURRENT_VERSION, LogoService, NewerRelease, SettingsService};
 use crate::state::AppState;
 
 #[derive(Template)]
@@ -33,6 +33,8 @@ struct SettingsPageTemplate {
     users_count: i64,
     admins_count: i64,
     icons_count: i64,
+    /// A newer published version, once the daily check finds one.
+    newer: Option<NewerRelease>,
     i18n: I18n,
 }
 
@@ -69,6 +71,11 @@ impl SettingsPageTemplate {
     fn zone_notice(&self, zone: &str) -> String {
         self.i18n
             .tf("admin.zone_notice", &[("zone", &Self::zone_label(zone))])
+    }
+
+    fn newer_notice(&self, release: &NewerRelease) -> String {
+        self.i18n
+            .tf("admin.version_newer", &[("version", &release.version)])
     }
 
     fn icons_label(&self) -> String {
@@ -260,6 +267,7 @@ async fn render_settings(
         users_count: UserRepository::count_all(&state.pool).await?,
         admins_count: UserRepository::count_admins(&state.pool).await?,
         icons_count: IconRepository::count(&state.pool).await?,
+        newer: state.update.newer(),
         i18n,
     })
 }

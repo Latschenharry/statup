@@ -135,6 +135,17 @@
                 </div>
                 <a href="/?arrange=1" class="btn btn-ghost">{{ i18n.t("admin.dashboard_arrange") }}</a>
             </div>
+            <div class="set-row">
+                <div>
+                    <p class="set-label">{{ i18n.t("admin.version") }}<span class="count">{{ CURRENT_VERSION }}</span></p>
+                    {% if let Some(release) = newer %}
+                    <p class="set-update" data-tone="info">{{ self.newer_notice(release) }}</p>
+                    {% endif %}
+                </div>
+                {% if let Some(release) = newer %}
+                <a href="{{ release.url }}" class="btn btn-primary" rel="noopener">{{ i18n.t("admin.version_view") }}</a>
+                {% endif %}
+            </div>
         </section>
     </div>
 </div>

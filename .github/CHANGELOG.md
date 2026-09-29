@@ -34,6 +34,9 @@ Since the first public commit:
   letters, a digit and a symbol, or 20 characters of any kind.
 - The Compose file publishes Statup on this machine only until you open it,
   so nobody else can create the first administrator.
+- Administrators see the version in Settings, and the newer one once it is
+  published: the server asks GitHub once a day (`UPDATE_CHECK=false` turns
+  it off).
 - Security: behind a proxy, the client address is read from the one header
   named in `CLIENT_IP_HEADER` (the last entry of `X-Forwarded-For` by
   default); an IPv6 client is limited as its whole /64; a sign-in form stays

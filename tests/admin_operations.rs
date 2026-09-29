@@ -6,7 +6,7 @@ mod common;
 
 use reqwest::StatusCode;
 
-use common::{TestApp, extract_csrf_token};
+use common::{Options, TestApp, extract_csrf_token};
 use statup::models::Role;
 use statup::repositories::{ServiceRepository, UserRepository};
 
@@ -1083,4 +1083,28 @@ async fn an_icon_in_use_stays_until_its_service_lets_it_go() {
     assert!(location.is_some_and(|l| l.starts_with("/icons?removed=")));
     let (status, _) = app.get(&format!("/uploads/icons/{filename}")).await;
     assert_eq!(status, StatusCode::NOT_FOUND, "the file went with it");
+}
+
+#[tokio::test]
+async fn administrators_see_the_version_and_a_newer_one() {
+    let (app, _) = spawn_with_admin().await;
+    let (_, page) = app.get("/admin/settings").await;
+    let version = statup::services::CURRENT_VERSION;
+    assert!(
+        page.contains(&format!(r#"<span class="count">{version}</span>"#)),
+        "{page}"
+    );
+    assert!(!page.contains("releases/tag"), "nothing newer is known");
+
+    let app = TestApp::spawn_with(Options {
+        latest_release: Some("v99.0.0"),
+        ..Options::default()
+    })
+    .await;
+    app.create_user(ADMIN_EMAIL, ADMIN_PASSWORD, "Admin", Role::Admin)
+        .await;
+    app.login(ADMIN_EMAIL, ADMIN_PASSWORD).await;
+    let (_, page) = app.get("/admin/settings").await;
+    assert!(page.contains("La version 99.0.0 est disponible."), "{page}");
+    assert!(page.contains(r#"href="https://github.com/karl-cta/statup/releases/tag/v99.0.0""#));
 }

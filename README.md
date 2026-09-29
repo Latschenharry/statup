@@ -65,7 +65,7 @@ Statup answers them before they are asked. The IT team says what is broken, what
   </tr>
 </table>
 
-**Light, private, safe by default.** One Rust binary and one SQLite file: no Redis, no Postgres, a Docker image under 10 MB. Fonts and scripts come from your instance, so no visitor's browser calls a third party. Passwords are hashed with Argon2id, every form carries a CSRF token, and a strict Content Security Policy guards every page.
+**Light, private, safe by default.** One Rust binary and one SQLite file: no Redis, no Postgres, a Docker image under 10 MB. Fonts and scripts come from your instance, so no visitor's browser calls a third party; the server itself only asks GitHub once a day whether a newer version is out, which `UPDATE_CHECK=false` turns off. Passwords are hashed with Argon2id, every form carries a CSRF token, and a strict Content Security Policy guards every page.
 
 ## How it works
 

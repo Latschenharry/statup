@@ -59,6 +59,8 @@ pub struct Config {
     /// Feed readers need absolute links, and the `Host` header is not reliable
     /// enough behind a proxy that rewrites it. Falls back to the request host.
     pub public_url: Option<String>,
+    /// Ask GitHub once a day whether a newer version is published.
+    pub update_check: bool,
 }
 
 impl Config {
@@ -86,6 +88,7 @@ impl Config {
             client_ip_header: parse_env("CLIENT_IP_HEADER", X_FORWARDED_FOR)?,
             public_url: non_empty_env("PUBLIC_URL")
                 .map(|url| url.trim().trim_end_matches('/').to_string()),
+            update_check: parse_env("UPDATE_CHECK", true)?,
         };
         config.validate()?;
         Ok(config)

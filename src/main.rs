@@ -16,7 +16,7 @@ use statup::middleware::rate_limit::RateLimit;
 use statup::routes::create_router;
 use statup::services::{
     AuthService, DashboardLayoutService, LoginRateLimiter, SettingsService,
-    spawn_maintenance_schedule,
+    spawn_maintenance_schedule, spawn_update_check,
 };
 use statup::session;
 use statup::state::AppState;
@@ -43,7 +43,10 @@ async fn main() -> anyhow::Result<()> {
         .await
         .context("cannot create the session store")?;
     let rate_limit = RateLimit::new(config.client_ip_source())?;
-    let tasks = spawn_background_tasks(&pool, &rate_limit);
+    let mut tasks = spawn_background_tasks(&pool, &rate_limit);
+    if config.update_check {
+        tasks.push(spawn_update_check(Arc::clone(&state.update)));
+    }
 
     let sessions = session::session_layer(
         session_store,
@@ -138,6 +141,7 @@ async fn build_state(config: &Config, pool: DbPool) -> anyhow::Result<AppState> 
         trust_proxy_headers: config.trust_proxy_headers,
         client_ip_source: config.client_ip_source(),
         public_url: config.public_url.clone(),
+        update: Arc::default(),
     })
 }
 

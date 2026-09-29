@@ -27,6 +27,9 @@ tower-http = { version = "0.5", features = [
     "trace",
 ] }
 
+# Asks GitHub once a day whether a newer version is out
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls"] }
+
 # Database
 sqlx = { version = "0.7", features = ["runtime-tokio", "sqlite", "chrono", "time"] }
 
