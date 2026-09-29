@@ -29,7 +29,7 @@ A chosen password needs 12 characters with upper and lower case letters, a digit
 
 ## Configuration
 
-Every setting is optional. Copy `.env.example` to `.env` to change one. With Docker Compose, `DATABASE_URL`, `UPLOAD_DIR`, `HOST` and `PORT` belong to the image, so the data stays in its volume.
+Every setting is optional. Write the ones you change in a `.env` file next to `docker-compose.yml`; [`.env.example`](../.env.example) lists them with an explanation each. With Docker Compose, `DATABASE_URL`, `UPLOAD_DIR`, `HOST` and `PORT` belong to the image, so the data stays in its volume.
 
 | Variable | Default | Description |
 |---|---|---|
@@ -98,9 +98,11 @@ From source, stop the server and copy `statup.db*` and `data/uploads/`.
 ## Upgrading
 
 ```bash
-git pull
-docker compose up -d --build
+docker compose pull
+docker compose up -d
 ```
+
+`latest` follows each new version. To upgrade only when you choose, replace `latest` with a version number, such as `0.1.0`, under `image:` in `docker-compose.yml`; the versions are listed in the [changelog](CHANGELOG.md).
 
 Database migrations are compiled into the binary and run at start. Back up first: a database migrated by a newer version is refused by an older one.
 

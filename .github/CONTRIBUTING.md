@@ -28,6 +28,14 @@ or the given Rust targets, `scripts/coverage.sh` runs the tests under
 `cargo-llvm-cov`, `scripts/build-icons.py` regenerates the favicons from the
 logo.
 
+To try a change in Docker, build the image under the name
+`docker-compose.yml` runs, then start it as usual:
+
+```bash
+docker build -t ghcr.io/karl-cta/statup:latest .
+docker compose up -d
+```
+
 ## Releasing
 
 A version tag publishes the image and the release page: once the changelog

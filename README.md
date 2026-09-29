@@ -77,15 +77,15 @@ Statup answers them before they are asked. The IT team says what is broken, what
 
 You need Docker with Docker Compose 2.24 or newer.
 
-**1. Get Statup and start it**
+**1. Start Statup**
 
 ```bash
-git clone https://github.com/karl-cta/statup.git
-cd statup
+mkdir statup && cd statup
+curl -O https://raw.githubusercontent.com/karl-cta/statup/main/docker-compose.yml
 docker compose up -d
 ```
 
-The first start builds Statup, which takes a few minutes.
+Docker downloads the ready image, for x86-64 and ARM servers alike, and starts it in seconds.
 
 **2. Open http://localhost:3000**
 
