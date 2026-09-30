@@ -5,8 +5,8 @@
   <img src=".github/assets/wordmark.svg" width="220" height="59" alt="Statup">
 </picture>
 
-**The status page your whole company reads.**<br>
-Outages, maintenance and what changed, published by IT, in plain words for everyone.
+**Your outages, maintenance and news, on one status page.**<br>
+Whoever runs the service writes it once, for colleagues, customers or family, and nobody has to ask.
 
 [![License: AGPL-3.0-or-later](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue.svg)](LICENSE)
 [![Built with Rust](https://img.shields.io/badge/built%20with-Rust-orange.svg)](https://www.rust-lang.org/)
@@ -21,7 +21,7 @@ Outages, maintenance and what changed, published by IT, in plain words for every
 > *"Is the internet down?"* *"Is it just me, or is Outlook broken?"*<br>
 > Every outage starts with the same questions, by phone, by chat and at the IT office door.
 
-Statup answers them before they are asked. The IT team says what is broken, what is being fixed and what is planned, and also what changed: the new version of the payroll software, the printer that moved to the second floor, the VPN client everyone must install. Accounting, HR and everyone else read it in plain words, from a desk or a phone.
+Statup answers them before they are asked. IT, or whoever runs the tool, says what is broken, what is being fixed and what is planned, and also what changed: the new version of the payroll software, the printer that moved to the second floor, the VPN client everyone must install. Accounting, HR and everyone else read it in plain words, from a desk or a phone. It works the same for the customers of a service you run, or for a server at home.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/assets/status-page-dark.png">
@@ -47,7 +47,7 @@ Statup answers them before they are asked. The IT team says what is broken, what
       Announced ahead, it starts and ends at the planned times, and says so when the services stay usable.
     </td>
     <td valign="top">
-      <strong>News from IT</strong><br>
+      <strong>What's new</strong><br>
       Announcements for what changed: a software update, a new tool, an office move. Read as a short article, linked to the maintenance it follows.
     </td>
   </tr>
@@ -68,7 +68,7 @@ Statup answers them before they are asked. The IT team says what is broken, what
 ## How it works
 
 - **Services** are the tools people rely on: mail, the VPN, the ERP, the phones. Each shows one state: operational, degraded, outage or maintenance.
-- **Events** are what the IT team publishes. An **incident** when something breaks, a **maintenance** when work is planned, an **announcement** for news. An incident or a maintenance sets the state of the services it names until it ends.
+- **Events** are what gets published. An **incident** when something breaks, a **maintenance** when work is planned, an **announcement** for news. An incident or a maintenance sets the state of the services it names until it ends.
 - **People** read the page, with or without an account. **Editors** publish events and set service states; **administrators** also run the settings, the team and the layout of the page.
 
 ## Quick start
@@ -89,7 +89,7 @@ Docker downloads the ready image, for x86-64 and ARM servers alike, and starts i
 
 At http://localhost:3000, or your server's address on port 3000, an empty instance walks you through four steps: your administrator account, the page's name, logo and audience, the services to follow, then the address to share.
 
-**3. Invite your colleagues**
+**3. Invite your team**
 
 Add them from the **Team** page: they open the same address. For HTTPS and a name of your own, such as `status.example.com`, put Statup behind a reverse proxy.
 
