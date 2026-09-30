@@ -1,11 +1,9 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="static/logo-dark.svg">
-  <img src="static/logo.svg" width="60" height="80" alt="Statup logo">
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/wordmark-dark.svg">
+  <img src=".github/assets/wordmark.svg" width="220" height="59" alt="Statup">
 </picture>
-
-# Statup
 
 **The status page your whole company reads.**<br>
 Outages, maintenance and what changed, published by IT, in plain words for everyone.

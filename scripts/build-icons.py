@@ -6,9 +6,9 @@ Safari before 15 and the iOS home screen need PNG, and no rasterizer is
 assumed to be installed, so the mark is drawn here from the same geometry
 using the standard library only.
 
-static/logo-dark.svg is the same mark in the dark theme ink, for the README
-on a dark background where the near black ink drops to 1.1:1 contrast.
-Keep all three in sync when the geometry changes.
+.github/assets/wordmark.svg and wordmark-dark.svg draw the same mark beside
+the name, for the README in light and dark themes. Keep them all in sync
+when the geometry changes.
 
 Usage: python3 scripts/build-icons.py
 """
