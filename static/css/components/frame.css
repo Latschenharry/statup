@@ -630,7 +630,13 @@
         }
     }
 
+    /* On a phone the masthead scrolls away with the page: pinned, it took
+       a band of every screen while reading. */
     @media (max-width: 640px) {
+        .mast {
+            position: relative;
+        }
+
         .mast-word-custom {
             font-size: var(--text-xl);
         }

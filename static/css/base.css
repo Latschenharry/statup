@@ -39,6 +39,13 @@
         }
     }
 
+    /* No masthead stays on top of a phone's page (frame.css). */
+    @media (max-width: 640px) {
+        html {
+            scroll-padding-top: 24px;
+        }
+    }
+
     body {
         overflow-x: clip;
     }
