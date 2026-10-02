@@ -5,6 +5,8 @@ All notable changes to Statup are listed here. The project is pre-v1: until 1.0,
 ## Unreleased
 
 - On a page open to everyone, the sign-in page leads back to the dashboard, so a visitor who opened it out of curiosity is not stuck there.
+- On a phone, tapping a service or an event opens its page instead of a panel over the whole screen.
+- Fixed: filtering the events list by service showed an error page.
 
 ## 0.1.1, 2026-10-02
 

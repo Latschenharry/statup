@@ -7,6 +7,9 @@
     const LIVE_REFRESH_MS = 60000;
     // A side panel that has not loaded by then offers to try again.
     const DRAWER_TIMEOUT_MS = 15000;
+    // Where the panel would fill the screen (events.css, 640px), its link
+    // opens the page instead, which the phone's back button leaves.
+    const PANEL_FILLS_SCREEN = window.matchMedia("(max-width: 640px)");
     const FOCUSABLE =
         'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), ' +
         'select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -481,7 +484,9 @@
     function onDrawerClick(target, event) {
         const link = target.closest("[data-drawer]");
         if (link && !event.metaKey && !event.ctrlKey && !event.shiftKey && event.button === 0) {
-            if (openDrawer(link.dataset.drawer, link)) event.preventDefault();
+            if (!PANEL_FILLS_SCREEN.matches && openDrawer(link.dataset.drawer, link)) {
+                event.preventDefault();
+            }
             return true;
         }
         if (target.closest("[data-drawer-close]")) {
