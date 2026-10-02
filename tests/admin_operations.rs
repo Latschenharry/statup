@@ -627,14 +627,17 @@ fn icon_upload_body(csrf: &str, filename: &str, content_type: &str, data: &[u8])
     body
 }
 
-async fn upload_icon(app: &TestApp, body: Vec<u8>) -> reqwest::Response {
+async fn try_upload_icon(app: &TestApp, body: Vec<u8>) -> reqwest::Result<reqwest::Response> {
     app.client
         .post(app.url("/icons/upload"))
         .header("content-type", "multipart/form-data; boundary=statup")
         .body(body)
         .send()
         .await
-        .expect("upload failed")
+}
+
+async fn upload_icon(app: &TestApp, body: Vec<u8>) -> reqwest::Response {
+    try_upload_icon(app, body).await.expect("upload failed")
 }
 
 #[tokio::test]
@@ -698,16 +701,18 @@ async fn an_oversized_icon_is_refused_in_the_page() {
     // The server answers before reading the whole body and then closes the
     // connection, so the client gets the page or a reset while still sending.
     let huge = vec![0u8; 3 * 1024 * 1024];
-    let sent = app
-        .client
-        .post(app.url("/icons/upload"))
-        .header("content-type", "multipart/form-data; boundary=statup")
-        .body(icon_upload_body(&csrf, "huge.png", "image/png", &huge))
-        .send()
-        .await;
+    let sent = try_upload_icon(
+        &app,
+        icon_upload_body(&csrf, "huge.png", "image/png", &huge),
+    )
+    .await;
     let resp = match sent {
         Ok(resp) => resp,
-        Err(e) if e.is_request() => return,
+        Err(e) if e.is_request() => {
+            let (status, _) = app.get("/health").await;
+            assert_eq!(status, StatusCode::OK, "the server still answers: {e}");
+            return;
+        }
         Err(e) => panic!("upload failed: {e}"),
     };
     assert_eq!(resp.status(), StatusCode::PAYLOAD_TOO_LARGE);

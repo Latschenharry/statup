@@ -1178,6 +1178,9 @@ async fn a_service_panel_tells_its_story() {
     assert!(body.contains("Payroll slow"), "its last events are listed");
     assert!(body.contains(&format!("/events?service_id={service_id}")));
 
+    let printers = app.create_service("Printers").await;
+    app.create_incident("Printers jammed", "", "minor", &[printers])
+        .await;
     let (status, body) = app.get(&format!("/events?service_id={service_id}")).await;
     assert_eq!(
         status,
@@ -1185,6 +1188,7 @@ async fn a_service_panel_tells_its_story() {
         "the link to its events opens the list"
     );
     assert!(body.contains("Payroll slow"));
+    assert!(!body.contains("Printers jammed"), "only its own events");
 }
 
 async fn lifecycle_of(app: &TestApp, event_id: i64) -> Option<Lifecycle> {
