@@ -844,11 +844,9 @@ mod tests {
         )
         .await
         .unwrap();
-        assert!(
-            EventRepository::status_drivers(&pool, sid)
-                .await
-                .unwrap()
-                .is_empty()
+        assert_eq!(
+            EventRepository::status_drivers(&pool, sid).await.unwrap(),
+            []
         );
     }
 
@@ -860,11 +858,9 @@ mod tests {
         let event = EventRepository::create(&pool, &maintenance(uid, vec![sid], start))
             .await
             .unwrap();
-        assert!(
-            EventRepository::status_drivers(&pool, sid)
-                .await
-                .unwrap()
-                .is_empty()
+        assert_eq!(
+            EventRepository::status_drivers(&pool, sid).await.unwrap(),
+            []
         );
 
         let started = EventRepository::start_due_maintenance(&pool, Utc::now())
@@ -909,11 +905,11 @@ mod tests {
         EventRepository::create(&pool, &maintenance(uid, vec![sid], start))
             .await
             .unwrap();
-        assert!(
+        assert_eq!(
             EventRepository::start_due_maintenance(&pool, Utc::now())
                 .await
-                .unwrap()
-                .is_empty()
+                .unwrap(),
+            Vec::<i64>::new()
         );
     }
 

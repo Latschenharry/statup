@@ -146,15 +146,10 @@ fn no_transitions_from_terminal() {
 
 #[test]
 fn cross_kind_transitions_are_rejected() {
-    assert!(
-        Kind::Incident
-            .allowed_transitions(Lifecycle::Scheduled)
-            .is_empty()
-    );
-    assert!(
-        Kind::Maintenance
-            .allowed_transitions(Lifecycle::Investigating)
-            .is_empty()
+    assert_eq!(Kind::Incident.allowed_transitions(Lifecycle::Scheduled), []);
+    assert_eq!(
+        Kind::Maintenance.allowed_transitions(Lifecycle::Investigating),
+        []
     );
 }
 

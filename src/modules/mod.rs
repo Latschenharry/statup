@@ -77,6 +77,9 @@ impl ColumnWidth {
 /// Rendering contract of a dashboard module. The returned fragment is
 /// inserted as is, so modules render through Askama templates, which escape
 /// every value.
+// async_trait marks each boxed future `#[must_use]`, which clippy reads as
+// doubled on a type that already is.
+#[allow(clippy::double_must_use)]
 #[async_trait]
 pub trait Module: Send + Sync + 'static {
     /// Stable id, used in storage and URLs.
