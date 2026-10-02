@@ -22,6 +22,12 @@ main#main:not(.setup-side) {
     animation: none;
 }
 
+/* The current tab's line slides to the new tab while the masthead swaps. */
+::view-transition-group(mnav-current) {
+    animation-duration: 250ms;
+    animation-timing-function: var(--ease-out);
+}
+
 ::view-transition-old(page) {
     animation: page-out 140ms ease-in both;
 }

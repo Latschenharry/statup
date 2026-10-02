@@ -7,6 +7,7 @@ All notable changes to Statup are listed here. The project is pre-v1: until 1.0,
 - The Compose file runs the published image instead of building Statup: installing takes seconds, and upgrading is `docker compose pull`.
 - The Compose file opens Statup to the network again, so an install on a server is reached from every workstation right away.
 - The first launch speaks to whoever runs a service, for colleagues or customers: its texts no longer assume an IT team, and the choice of who can read the page explains that an open page is how you tell your customers.
+- The masthead tabs show where you are more clearly: the current tab's line sits under its word and slides to the next tab as you change page, and a hovered tab draws a lighter line instead of looking current.
 
 ## 0.1.0, 2026-09-29
 

@@ -31,19 +31,20 @@
                 </a>
             </div>
             <nav class="mast-nav" aria-label="{{ i18n.t("nav.main_nav") }}">
-                <a class="mnav" data-nav="home" href="/">{{ i18n.t("nav.dashboard") }}</a>
+                <a class="mnav" data-nav="home" href="/">{{ i18n.t("nav.dashboard") }}<span class="mnav-bar" aria-hidden="true"></span></a>
                 <a class="mnav" data-nav="events" href="/events">
                     {{ i18n.t("nav.events") }}
                     {% if frame.unread_count > 0 %}
                     <span class="unread" aria-hidden="true">{% if frame.unread_count > 99 %}99+{% else %}{{ frame.unread_count }}{% endif %}</span>
                     <span class="sr-only">{{ frame.unread_label }}</span>
                     {% endif %}
+                    <span class="mnav-bar" aria-hidden="true"></span>
                 </a>
                 {% if frame.can_publish %}
-                <a class="mnav" data-nav="services" href="/services">{{ i18n.t("nav.services") }}</a>
+                <a class="mnav" data-nav="services" href="/services">{{ i18n.t("nav.services") }}<span class="mnav-bar" aria-hidden="true"></span></a>
                 {% endif %}
                 {% if frame.is_admin %}
-                <a class="mnav" data-nav="admin" href="/admin/settings">{{ i18n.t("nav.admin") }}</a>
+                <a class="mnav" data-nav="admin" href="/admin/settings">{{ i18n.t("nav.admin") }}<span class="mnav-bar" aria-hidden="true"></span></a>
                 {% endif %}
                 <span class="mnav-spacer"></span>
                 <div class="mnav-tools">

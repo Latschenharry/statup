@@ -115,15 +115,26 @@
         color: var(--ink);
     }
 
-    /* The current tab is underlined into the rule below. */
-    .mnav::after {
-        content: "";
+    /* A line under the word, clear of the rule below: muted and grown from
+       the middle under the pointer, ink on the current tab, which a
+       navigation slides to the next one (motion.css). */
+    .mnav-bar {
         position: absolute;
         right: 14px;
-        bottom: 0;
+        bottom: 9px;
         left: 14px;
         height: 2px;
-        background: transparent;
+        background: var(--muted);
+        opacity: 0;
+        transform: scaleX(0.4);
+        transition: transform 220ms var(--ease-out), opacity 160ms var(--ease-out);
+    }
+
+    @media (hover: hover) {
+        .mnav:hover .mnav-bar {
+            opacity: 1;
+            transform: none;
+        }
     }
 
     /* The page names its section on the shell, so the tab is marked
@@ -137,12 +148,15 @@
         color: var(--ink);
     }
 
-    .mnav[aria-current="page"]::after,
-    [data-section="home"] .mnav[data-nav="home"]::after,
-    [data-section="events"] .mnav[data-nav="events"]::after,
-    [data-section="services"] .mnav[data-nav="services"]::after,
-    [data-section="admin"] .mnav[data-nav="admin"]::after {
+    .mnav[aria-current="page"] .mnav-bar,
+    [data-section="home"] .mnav[data-nav="home"] .mnav-bar,
+    [data-section="events"] .mnav[data-nav="events"] .mnav-bar,
+    [data-section="services"] .mnav[data-nav="services"] .mnav-bar,
+    [data-section="admin"] .mnav[data-nav="admin"] .mnav-bar {
         background: var(--ink);
+        opacity: 1;
+        transform: none;
+        view-transition-name: mnav-current;
     }
 
     /* Unread count: a neutral ink token, never the outage red. */
@@ -943,7 +957,8 @@
         }
 
         .skip-link,
-        .mast-burger-icon {
+        .mast-burger-icon,
+        .mnav-bar {
             transition: none;
         }
 
