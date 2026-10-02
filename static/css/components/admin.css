@@ -597,9 +597,12 @@
         white-space: nowrap;
     }
 
+    /* As many cells as the width holds: on a phone the grid shares its row
+       with the remove button, and six fixed columns pushed the form wider
+       than the screen. */
     .icon-grid {
         display: grid;
-        grid-template-columns: repeat(6, 44px);
+        grid-template-columns: repeat(auto-fill, 44px);
         gap: 6px;
     }
 
