@@ -630,9 +630,16 @@
         }
     }
 
-    /* On a phone the masthead scrolls away with the page: pinned, it took
-       a band of every screen while reading. */
-    @media (max-width: 640px) {
+    /* A phone, upright or on its side. This block is the one place that
+       says so: the script reads `--phone-layout` to open pages instead of
+       the side panel. On a phone the masthead scrolls away with the page:
+       pinned, it took a band of every screen while reading. */
+    @media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+        html {
+            --phone-layout: 1;
+            scroll-padding-top: 24px;
+        }
+
         .mast {
             position: relative;
         }
@@ -659,7 +666,9 @@
         .mast-menu-clock {
             margin-top: auto;
         }
+    }
 
+    @media (max-width: 640px) {
         .mast-word-custom {
             font-size: var(--text-xl);
         }

@@ -25,7 +25,8 @@
            needs it as well as the body. */
         overflow-x: clip;
         /* Anchors and keyboard focus stop clear of the sticky masthead, and
-           of the action bar under the long forms. */
+           of the action bar under the long forms. A phone has no pinned
+           masthead and stops closer (frame.css). */
         scroll-padding-top: 96px;
     }
 
@@ -36,13 +37,6 @@
     @media (max-width: 720px) {
         html:has(.action-bar) {
             scroll-padding-bottom: 150px;
-        }
-    }
-
-    /* No masthead stays on top of a phone's page (frame.css). */
-    @media (max-width: 640px) {
-        html {
-            scroll-padding-top: 24px;
         }
     }
 

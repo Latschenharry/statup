@@ -7,9 +7,10 @@
     const LIVE_REFRESH_MS = 60000;
     // A side panel that has not loaded by then offers to try again.
     const DRAWER_TIMEOUT_MS = 15000;
-    // Where the panel would fill the screen (events.css, 640px), its link
-    // opens the page instead, which the phone's back button leaves.
-    const PANEL_FILLS_SCREEN = window.matchMedia("(max-width: 640px)");
+    // On a phone (frame.css sets the flag) a panel link opens its page
+    // instead, which the phone's back button leaves.
+    const isPhoneLayout = () =>
+        getComputedStyle(root).getPropertyValue("--phone-layout").trim() === "1";
     const FOCUSABLE =
         'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), ' +
         'select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -484,7 +485,7 @@
     function onDrawerClick(target, event) {
         const link = target.closest("[data-drawer]");
         if (link && !event.metaKey && !event.ctrlKey && !event.shiftKey && event.button === 0) {
-            if (!PANEL_FILLS_SCREEN.matches && openDrawer(link.dataset.drawer, link)) {
+            if (!isPhoneLayout() && openDrawer(link.dataset.drawer, link)) {
                 event.preventDefault();
             }
             return true;
@@ -535,6 +536,12 @@
         if (onDrawerClick(target, event) || onConfirmClick(target)) return;
         const copy = target.closest("[data-copy]");
         if (copy) copyValue(copy);
+    });
+
+    // A panel left open when the screen becomes a phone's, by turning it
+    // upright, closes rather than filling the screen.
+    window.addEventListener("resize", () => {
+        if (drawerIsOpen() && isPhoneLayout()) closeDrawer();
     });
 
     document.addEventListener("keydown", (event) => {
