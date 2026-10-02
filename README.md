@@ -12,7 +12,7 @@ Whoever runs the service writes it once, for colleagues, customers or family, an
 [![Built with Rust](https://img.shields.io/badge/built%20with-Rust-orange.svg)](https://www.rust-lang.org/)
 [![Status: pre-v1](https://img.shields.io/badge/status-pre--v1-yellow.svg)](#status)
 
-[Features](#features) · [How it works](#how-it-works) · [Quick start](#quick-start) · [Roadmap](#roadmap) · [Self-hosting guide](.github/SELF-HOSTING.md)
+[Live demo](https://demo.statup.dev) · [Website](https://statup.dev) · [Features](#features) · [How it works](#how-it-works) · [Quick start](#quick-start) · [Roadmap](#roadmap) · [Self-hosting guide](.github/SELF-HOSTING.md)
 
 </div>
 
@@ -27,6 +27,9 @@ Statup answers them before they are asked. IT, or whoever runs the tool, says wh
   <source media="(prefers-color-scheme: dark)" srcset=".github/assets/status-page-dark.png">
   <img src=".github/assets/status-page.png" alt="The status page: a banner saying one service is disrupted, with the incident and its latest update, then the services with thirty days of availability, the recent activity and the maintenance schedule" width="1280">
 </picture>
+
+> [!TIP]
+> **See it live** at [demo.statup.dev](https://demo.statup.dev): the page is open to everyone. Sign in with `demo@statup.dev` and `StatupDemo#1` to publish incidents, maintenance and news as an editor would. Visitors share this account, and the demo starts over every hour.
 
 ## Features
 
