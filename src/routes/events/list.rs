@@ -27,7 +27,7 @@ pub struct ListQuery {
     page: Option<i64>,
     #[serde(default, deserialize_with = "super::deserialize_blank_as_none")]
     kind: Option<Kind>,
-    #[serde(default, deserialize_with = "super::deserialize_blank_as_none")]
+    #[serde(default, deserialize_with = "super::deserialize_blank_as_none_id")]
     service_id: Option<i64>,
     #[serde(default, deserialize_with = "super::deserialize_blank_as_none")]
     from: Option<String>,
@@ -224,6 +224,13 @@ mod tests {
         let q = query("kind=&service_id=&q=%20%20&lifecycle=");
         assert!(!q.has_filters());
         assert_eq!(q.page_link_base(), "/events?");
+    }
+
+    #[test]
+    fn a_service_filter_reads_its_id() {
+        let q = query("service_id=5");
+        assert_eq!(q.service_id, Some(5));
+        assert!(q.has_filters());
     }
 
     #[test]

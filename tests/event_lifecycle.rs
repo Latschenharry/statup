@@ -1177,6 +1177,14 @@ async fn a_service_panel_tells_its_story() {
     assert!(body.contains("drawer-title") && body.contains("Payroll"));
     assert!(body.contains("Payroll slow"), "its last events are listed");
     assert!(body.contains(&format!("/events?service_id={service_id}")));
+
+    let (status, body) = app.get(&format!("/events?service_id={service_id}")).await;
+    assert_eq!(
+        status,
+        StatusCode::OK,
+        "the link to its events opens the list"
+    );
+    assert!(body.contains("Payroll slow"));
 }
 
 async fn lifecycle_of(app: &TestApp, event_id: i64) -> Option<Lifecycle> {
