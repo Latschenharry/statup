@@ -637,6 +637,29 @@
             position: relative;
         }
 
+        /* Open, the compact menu fills the screen under the masthead as an
+           app's menu does, its clock at the foot, the page below it. */
+        .mast:has(.mast-menu:not([hidden])) {
+            display: flex;
+            flex-direction: column;
+            min-height: 100dvh;
+        }
+
+        /* Its auto margins would otherwise centre the row in the column. */
+        .mast:has(.mast-menu:not([hidden])) > .mast-inner {
+            width: 100%;
+        }
+
+        .mast-menu {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
+
+        .mast-menu-clock {
+            margin-top: auto;
+        }
+
         .mast-word-custom {
             font-size: var(--text-xl);
         }
