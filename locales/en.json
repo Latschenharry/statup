@@ -21,6 +21,7 @@
   "footer.powered_by": "Powered by",
   "auth.login_title": "Sign in",
   "auth.login_heading": "Sign in to",
+  "auth.back": "Dashboard",
   "auth.email": "Email address",
   "auth.password": "Password",
   "auth.remember_me": "Stay signed in for 30 days",

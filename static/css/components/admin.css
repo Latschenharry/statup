@@ -690,6 +690,12 @@
         margin-bottom: 28px;
     }
 
+    .auth-back {
+        display: flex;
+        width: fit-content;
+        margin-bottom: 24px;
+    }
+
     .auth-mark {
         width: auto;
         height: 40px;

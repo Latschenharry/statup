@@ -80,6 +80,8 @@ struct LoginTemplate {
     email: String,
     instance: String,
     powered_by: bool,
+    /// A visitor who opened the sign-in page from an open page can go back.
+    public_page: bool,
     i18n: I18n,
 }
 
@@ -130,6 +132,7 @@ async fn instance_is_empty(state: &AppState) -> Result<bool, AppError> {
 }
 
 fn render_login(
+    state: &AppState,
     csrf_token: String,
     i18n: I18n,
     error: Option<String>,
@@ -142,6 +145,7 @@ fn render_login(
         email,
         instance,
         powered_by,
+        public_page: state.is_public_mode(),
         i18n,
     })
 }
@@ -161,7 +165,7 @@ pub async fn login_form(
         return Ok(Redirect::to("/register").into_response());
     }
     let csrf_token = form_token(&session).await?;
-    render_login(csrf_token, i18n, None, String::new())
+    render_login(&state, csrf_token, i18n, None, String::new())
 }
 
 pub async fn login(
@@ -180,7 +184,7 @@ pub async fn login(
     let refusal = missing_credentials(&input).or_else(|| blocked(&state, &ip, &input.email));
     if let Some(key) = refusal {
         let message = Some(i18n.t(key).to_string());
-        return render_login(csrf_token, i18n, message, input.email);
+        return render_login(&state, csrf_token, i18n, message, input.email);
     }
 
     match AuthService::login(&state.pool, &input.email, &input.password).await {
@@ -192,7 +196,7 @@ pub async fn login(
         Err(AppError::Validation(key)) => {
             state.login_limiter.record_failure(&ip, &input.email);
             let message = Some(i18n.t(&key).to_string());
-            render_login(csrf_token, i18n, message, input.email)
+            render_login(&state, csrf_token, i18n, message, input.email)
         }
         Err(e) => Err(e),
     }

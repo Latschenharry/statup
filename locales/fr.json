@@ -21,6 +21,7 @@
   "footer.powered_by": "Propulsé par",
   "auth.login_title": "Connexion",
   "auth.login_heading": "Connexion à",
+  "auth.back": "Tableau de bord",
   "auth.email": "Adresse e-mail",
   "auth.password": "Mot de passe",
   "auth.remember_me": "Rester connecté 30 jours",

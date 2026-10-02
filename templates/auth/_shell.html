@@ -16,6 +16,7 @@
     </header>
     <main id="main" class="auth-panel">
         <header class="auth-head">
+            {% block auth_back %}{% endblock %}
             {% let logo_size = "auth-mark" %}
             {% include "components/logo.html" %}
             {% block auth_head %}{% endblock %}

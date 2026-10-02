@@ -392,6 +392,19 @@ async fn login_form_is_public() {
 }
 
 #[tokio::test]
+async fn login_form_leads_back_to_an_open_page_only() {
+    let open = TestApp::spawn_public().await;
+    seed_admin(&open).await;
+    let (_, body) = open.get("/login").await;
+    assert!(body.contains(r#"<a href="/" class="back-link auth-back">"#));
+
+    let closed = TestApp::spawn().await;
+    seed_admin(&closed).await;
+    let (_, body) = closed.get("/login").await;
+    assert!(!body.contains("auth-back"));
+}
+
+#[tokio::test]
 async fn admin_can_access_admin_routes() {
     let app = TestApp::spawn().await;
     seed_admin(&app).await;

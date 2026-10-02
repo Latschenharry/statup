@@ -2,6 +2,10 @@
 
 All notable changes to Statup are listed here. The project is pre-v1: until 1.0, a minor version may change the interface or the database, and the README asks you to back up before upgrading.
 
+## Unreleased
+
+- On a page open to everyone, the sign-in page leads back to the dashboard, so a visitor who opened it out of curiosity is not stuck there.
+
 ## 0.1.1, 2026-10-02
 
 - The Compose file runs the published image instead of building Statup: installing takes seconds, and upgrading is `docker compose pull`.
