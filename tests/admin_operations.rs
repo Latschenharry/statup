@@ -696,13 +696,20 @@ async fn an_oversized_icon_is_refused_in_the_page() {
     assert!(body.contains("trop lourd"), "{body}");
 
     // The server answers before reading the whole body and then closes the
-    // connection, so the client may not get to read the page itself.
+    // connection, so the client gets the page or a reset while still sending.
     let huge = vec![0u8; 3 * 1024 * 1024];
-    let resp = upload_icon(
-        &app,
-        icon_upload_body(&csrf, "huge.png", "image/png", &huge),
-    )
-    .await;
+    let sent = app
+        .client
+        .post(app.url("/icons/upload"))
+        .header("content-type", "multipart/form-data; boundary=statup")
+        .body(icon_upload_body(&csrf, "huge.png", "image/png", &huge))
+        .send()
+        .await;
+    let resp = match sent {
+        Ok(resp) => resp,
+        Err(e) if e.is_request() => return,
+        Err(e) => panic!("upload failed: {e}"),
+    };
     assert_eq!(resp.status(), StatusCode::PAYLOAD_TOO_LARGE);
     assert_eq!(
         resp.headers()
