@@ -42,7 +42,7 @@ pub struct EventInput {
     service_ids: Vec<i64>,
     #[serde(default)]
     save_as_template: Option<String>,
-    #[serde(default, deserialize_with = "super::deserialize_blank_as_none_id")]
+    #[serde(default, deserialize_with = "super::deserialize_blank_as_none")]
     template_id: Option<i64>,
     #[serde(default)]
     planned_start: String,
@@ -54,7 +54,7 @@ pub struct EventInput {
     opening_step: Option<Lifecycle>,
     #[serde(default)]
     keeps_services_up: Option<String>,
-    #[serde(default, deserialize_with = "super::deserialize_blank_as_none_id")]
+    #[serde(default, deserialize_with = "super::deserialize_blank_as_none")]
     follows_event_id: Option<i64>,
 }
 

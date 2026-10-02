@@ -27,7 +27,7 @@ pub struct ListQuery {
     page: Option<i64>,
     #[serde(default, deserialize_with = "super::deserialize_blank_as_none")]
     kind: Option<Kind>,
-    #[serde(default, deserialize_with = "super::deserialize_blank_as_none_id")]
+    #[serde(default, deserialize_with = "super::deserialize_blank_as_none")]
     service_id: Option<i64>,
     #[serde(default, deserialize_with = "super::deserialize_blank_as_none")]
     from: Option<String>,
